@@ -3,7 +3,6 @@ import math
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from .locators import BasePageLocators, BasketPageLocators
 
 main_link = "http://lk.pub.ast.safib.ru/"
 
@@ -40,20 +39,25 @@ class BasePage():
 
         return True
 
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-        login_link.click()
+    def should_be_match_link (self, link):
+        current_link = self.browser.current_url
+        assert link in current_link, f"Текщий адрес \"{current_link}\" не содержит ожидаемого фрагмента \"{link}\""
 
-    def go_to_basket_page(self):
-        login_link = self.browser.find_element(*BasketPageLocators.BASKET_LINK)
-        login_link.click()
 
-    def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+    # def go_to_login_page(self):
+    #     login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+    #     login_link.click()
+    #
+    # def go_to_basket_page(self):
+    #     login_link = self.browser.find_element(*BasketPageLocators.BASKET_LINK)
+    #     login_link.click()
 
-    def should_be_basket_link(self):
-        assert self.is_element_present(*BasketPageLocators.BASKET_LINK), "Basket link is not presented"
-
-    def should_be_authorized_user(self):
-        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
-                                                                     " probably unauthorised user"
+    # def should_be_login_link(self):
+    #     assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+    #
+    # def should_be_basket_link(self):
+    #     assert self.is_element_present(*BasketPageLocators.BASKET_LINK), "Basket link is not presented"
+    #
+    # def should_be_authorized_user(self):
+    #     assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+    #                                                                  " probably unauthorised user"
