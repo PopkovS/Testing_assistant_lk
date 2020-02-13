@@ -1,5 +1,12 @@
 from time import sleep
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from conftest import browser
+import requests
+import pg_data_base
 from .locators import LoginLocators
 from .base_page import BasePage
 
@@ -24,14 +31,19 @@ class LoginPage(BasePage):
                                               f"ожидаемым \"{expected_err_mess}\" "
 
     def should_be_alert(self, alert_text_expected="Не все поля были заполнены правильно."):
-        sleep(0.1)
-        alert_err_text = self.browser.find_element(*LoginLocators.ERR_ALERT).text
+        alert = LoginLocators.ERR_ALERT
+        wait = WebDriverWait(self.browser, 5)
+        alert_err_text = wait.until(EC.visibility_of_element_located((alert))).text
         assert alert_err_text == alert_text_expected, f"Полученное сообщение в алерте \"{alert_err_text}\" не " \
                                                       f"совподает с ожидаемым \"{alert_text_expected}\" "
 
     def should_be_no_more_necessary_alert(self, n=1):
         number_of_alerts = len(self.browser.find_elements(*LoginLocators.ERR_ALERT))
-        assert number_of_alerts <= n, f"Количество алертов на экрване ({number_of_alerts}) превышает ожидаемое ({n})"
+        assert number_of_alerts == n, f"Количество алертов на экрване ({number_of_alerts}) превышает ожидаемое ({n})"
+
+
+
+
 
     # def should_be_login_url(self):
     #     assert "login" in self.browser.current_url, "This is not a registration page address"

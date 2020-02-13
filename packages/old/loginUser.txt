@@ -1,0 +1,27 @@
+POST http://lk.pub.ast.safib.ru/Account/Login HTTP/1.1
+Host: lk.pub.ast.safib.ru
+Connection: keep-alive
+Content-Length: 358
+Accept: */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary1YXw1Faijb4wAWif
+Origin: http://lk.pub.ast.safib.ru
+Referer: http://lk.pub.ast.safib.ru/Account/Login?returnUrl=%2FClientDevice
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; _ga=GA1.2.1013328165.1580805590; .AspNetCore.Session=CfDJ8Gya9OMznX9Ft1nls2xksaT5yWZ2avvK%2BSkwQ8NrtZTr9T4HMl9e3fhnN8Jo1M1D0GU09pkiTUbEEeR9Bt4k%2BHc%2F4pqWns%2FMc3HRJ8DgD4WV%2BBDVB4Ll88zdSnOykPEmPtC%2Br3khAjbYtBFwrhBWWPGcU2Dc8ygu7B15Gcp0zRRo; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1
+
+------WebKitFormBoundary1YXw1Faijb4wAWif
+Content-Disposition: form-data; name="ReturnUrl"
+
+/ClientDevice
+------WebKitFormBoundary1YXw1Faijb4wAWif
+Content-Disposition: form-data; name="Email"
+
+test@safib.ru
+------WebKitFormBoundary1YXw1Faijb4wAWif
+Content-Disposition: form-data; name="PasswordUser"
+
+1
+------WebKitFormBoundary1YXw1Faijb4wAWif--

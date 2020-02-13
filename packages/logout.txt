@@ -1,0 +1,11 @@
+GET http://lk.corp.ast.safib.ru/Account/Logoff HTTP/1.1
+Host: lk.corp.ast.safib.ru
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Referer: http://lk.corp.ast.safib.ru/ClientDevice
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; _ga=GA1.2.1013328165.1580805590; .AspNetCore.Session=CfDJ8C0jsP%2B2KCNLqRnVniA7hYNxLxLHx%2FzRTg%2Bp3hSsty5TM%2BfvulQSVCYXxI%2B4S7VvMv8rG8w%2FQSrqOjC7iRFRCVPp2toOND5qvGOZkZEN2%2FRNhj21DhFYvU2xxPOEsIUFHXk1572d7Elj5EXzLWQqILtE0xzbQFZQ%2BE12LTz0pw8%2F; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1
+

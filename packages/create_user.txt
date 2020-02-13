@@ -1,0 +1,100 @@
+POST http://lk.corp.ast.safib.ru/User/SaveDirect HTTP/1.1
+Host: lk.corp.ast.safib.ru
+Connection: keep-alive
+Content-Length: 2390
+Accept: */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Origin: http://lk.corp.ast.safib.ru
+Referer: http://lk.corp.ast.safib.ru/User/Create
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; _ga=GA1.2.1013328165.1580805590; .AspNetCore.Session=CfDJ8C0jsP%2B2KCNLqRnVniA7hYNxLxLHx%2FzRTg%2Bp3hSsty5TM%2BfvulQSVCYXxI%2B4S7VvMv8rG8w%2FQSrqOjC7iRFRCVPp2toOND5qvGOZkZEN2%2FRNhj21DhFYvU2xxPOEsIUFHXk1572d7Elj5EXzLWQqILtE0xzbQFZQ%2BE12LTz0pw8%2F; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; .AspNetCore.Antiforgery.mUEwzI9EnP0=CfDJ8C0jsP-2KCNLqRnVniA7hYMfHSICiZgE8vN9VW13lyR_vrCM7URxHuFNMo4-pmbQFeFioWDhh--sbD-O99wyscxoSQMErAfA5igJXQfu4SkUeW3jSN3OxxWJ1t4a6I9pGuOuxfP7lGxHJl_g6NZehpQ; arp_scroll_position=204
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Id"
+
+0
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="UID"
+
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Email"
+
+testassistanttest@mailforspam.com
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="AD"
+
+False
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="DistinguishedName"
+
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="UserName"
+
+test_user
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Password"
+
+123
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="ConfirmPassword"
+
+123
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="StatusId"
+
+0
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Phone"
+
++7 (920) 446-56-96
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="TwoFactor"
+
+False
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="TwoFactorNotyfyType"
+
+0
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Comment"
+
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="NotifyForSupport"
+
+False
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="TimeZoneId"
+
+71
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="AutoRoles[0].Id"
+
+1
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Roles[0].IsChecked"
+
+true
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Roles[0].Id"
+
+30
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="ImageData"
+
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="Image"; filename=""
+Content-Type: application/octet-stream
+
+
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA
+Content-Disposition: form-data; name="__RequestVerificationToken"
+
+CfDJ8C0jsP-2KCNLqRnVniA7hYN992tPZtmtRaOkSy6Mep7aJ5nno2PPuwuAqQZaMMf3aPLfu1sOdoBWlvL-8xbyJ2epWZ4xMNHsfMoFAWvcXN5d3zUtr3ZC5vF8xzcGLQhq9e9KdqTZ28NTGUSMRx6sZzo
+------WebKitFormBoundaryB3Wx8EWNkuVxRNVA--

@@ -22,9 +22,11 @@ def browser(request):
     if browser_name == "chrome":
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-        options.add_argument("--window-size=1600,900")
+        # options.add_argument("--window-size=1600,900")
+        # options.add_argument("--headless")
         print("\nstart chrome browser for test..")
         browser = webdriver.Chrome(options=options)
+        browser.maximize_window()
     elif browser_name == "firefox":
         fp = webdriver.FirefoxProfile()
         fp.set_preference("intl.accept_languages", user_language)

@@ -1,0 +1,351 @@
+POST http://lk.pub.ast.safib.ru/SystemParameter HTTP/1.1
+Host: lk.pub.ast.safib.ru
+Connection: keep-alive
+Content-Length: 9359
+Accept: */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryQCWbkTZmihCI9I65
+Origin: http://lk.pub.ast.safib.ru
+Referer: http://lk.pub.ast.safib.ru/systemparameter
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: .AspNetCore.Session=CfDJ8Gya9OMznX9Ft1nls2xksaSiW6%2BwC5Sr3YVyZ69d33%2Fofu2W4FqoX0zpDXrRP2pG5ZBNqfR6CUJVL0S9TqM46lWo6xkQBBidLlf9isMzXmoesyAYf8EXjd7CYU4hq0XidoP5JaovbTo%2FlbJ8TPyRLgvn%2BpKII0lh2vR3Wa29vKpX; .AspNetCore.Antiforgery.TS_lIcLqgyo=CfDJ8Gya9OMznX9Ft1nls2xksaRyluAUfGyDxmPlSuc1rA5o4r8Ay8dvINYxtODPC052LBbA0X4FOqwr5gWYNVG6A1YJO4ItBDnO71xF7oSIxIP2qu7yRbbDX6ZZBVYtLFPOihP_cg-giUw2D18k6riLY6Q
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompanyName"
+
+ООО "САФИБ"
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompanyPhone"
+
++7 (473) 239-96-92
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompanyEmail"
+
+office@safib.ru
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompanySkype"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompanyFax"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_Address"
+
+394006, г. Воронеж, ул 20-летия Октября д.103, оф.430
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SupportPhone1"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SupportPhone2"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SupportPhone3"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SupportEMail"
+
+msstep@safib.ru
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SalePhone1"
+
++7 (473) 239-96-92
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SalePhone2"
+
++7 (499) 348-96-33
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SalePhone3"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_SaleEMail"
+
+vadim.varganov@yandex.ru
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_AccountPhone1"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_AccountPhone2"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_AccountPhone3"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_AccountEMail"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="ServiceEMail"
+
+pub@safib.ru
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMTPServer"
+
+192.168.70.1
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMTPPort"
+
+25
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMTPPassword"
+
+assist7
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMTPEnableSSL"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="Notify_DefaultSender"
+
+Служба уведомлений Ассистент PUB
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_APIID"
+
+BEA423DD-F144-0F71-9729-6F1570DF0623
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_Login"
+
+79601114746
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_Password"
+
+QwErTy21
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_SendUrl"
+
+http://sms.ru/sms/send
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_TokenUrl"
+
+http://sms.ru/auth/get_token
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_Period"
+
+60
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_Translit"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SMS_Sender"
+
+MyAssistant
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WWW_Domain"
+
+http://pub.ast.safib.ru/
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WebPortal_Distr_WebDistr"
+
+C:\inetpub\pub.www\Distr
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WebPortal_Distr_WebFaq"
+
+C:\inetpub\pub.www\Doc
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="UpdateFTPURL"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="UpdateHTTPURL"
+
+http://192.168.71.4:80
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="UserRulesPageCode"
+
+16
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AboutCompanyPageCode"
+
+3
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IdLicenseTypeForPageCertificate"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IdLicenseForPageCertificate"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PartnersPageCode"
+
+17
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="BPartnersPageCode"
+
+19
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CompatibilitiesPageCode"
+
+18
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PersonalDataPoliticPageCode"
+
+20
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="TicketSystemParams"
+
+http://192.168.70.171/api/http.php/tickets.json;3359528DF107F81B8A07290DCD6CDEDA;13;12
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="LogInterractionStorage"
+
+C:\Assitant_Logsrv
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="InfoMessage"
+
+
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SupportRegime"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="SupportRegime"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IsDirectSubjectControl"
+
+true
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IsDirectSubjectControl"
+
+true
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="CheckClientFileImagesOnStart"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IsLogEnabled"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IsLogEnabled"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="LoggingIDService"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="BlockInactiveAccountAfter"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WrongPasswordMaxCount"
+
+3
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WrongPasswordBlockPeriod"
+
+1
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="WrongPasswordControlPeriod"
+
+1
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordChangePeriod"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordRequiredLength"
+
+1
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordRequireNonLetterOrDigit"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordRequireDigit"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordRequireLowercase"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="PasswordRequireUppercase"
+
+False
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[0]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[1]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[2]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IncRightsFileExchange"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="IncRightsFileExchange"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[3]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[4]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[5]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[6]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[7]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[8]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessForDeviceId[9]"
+
+0
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessBefore"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="AccessBefore"
+
+True
+------WebKitFormBoundaryQCWbkTZmihCI9I65
+Content-Disposition: form-data; name="__RequestVerificationToken"
+
+CfDJ8Gya9OMznX9Ft1nls2xksaTzZ24Wug0LtjW-eKCqJLOH8A1ByYTkFIxLqg0Qd9nDTtxXQnYcMzc9lFj3V3F2nwqGPjgb_M0DYwdRrcf5vX7bBGgC0c94i41RsJaybUO_hAibdvo_7YmidvLvTGTBq7Y
+------WebKitFormBoundaryQCWbkTZmihCI9I65--
+
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: application/json; charset=utf-8
+Server: Kestrel
+X-Powered-By: ASP.NET
+Date: Mon, 03 Feb 2020 15:36:24 GMT
+
+4e
+{"Url":"/SystemParameter","Target":false,"Type":"JRedirectResult","Data":null}
+0
+

@@ -1,10 +1,13 @@
 import math
+import socket
+import traceback
 
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-main_link = "http://lk.pub.ast.safib.ru/"
+main_link = "http://lk.corp.ast.safib.ru/"
+
 
 class BasePage():
     def __init__(self, browser, url, timeout=3):
@@ -39,10 +42,22 @@ class BasePage():
 
         return True
 
-    def should_be_match_link (self, link):
+    def should_be_match_link(self, link):
         current_link = self.browser.current_url
         assert link in current_link, f"Текщий адрес \"{current_link}\" не содержит ожидаемого фрагмента \"{link}\""
 
+    def save_screen(self):
+        name_scr = traceback.extract_stack(None, 2)[0][2]
+        print(name_scr)
+        self.browser.save_screenshot(f".\\screenshots\\{name_scr}.png")
+
+    # def login_req(pack_name):
+    #     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #     sock.connect(('192.168.71.1', 80))
+    #     sock.sendall(open(rf'./packages/{pack_name}.txt', 'rb').read())
+    #     data = sock.recv(1024).decode("utf-8", errors="replace")
+    #     sock.close()
+    #     print(data)
 
     # def go_to_login_page(self):
     #     login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)

@@ -1,0 +1,27 @@
+POST http://lk.pub.ast.safib.ru/Account/Login HTTP/1.1
+Host: lk.pub.ast.safib.ru
+Connection: keep-alive
+Content-Length: 358
+Accept: */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryY14yx1ZboANMKKbM
+Origin: http://lk.pub.ast.safib.ru
+Referer: http://lk.pub.ast.safib.ru/Account/Login?returnUrl=%2FClientDevice
+Accept-Encoding: gzip, deflate
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; .AspNetCore.Session=CfDJ8Gya9OMznX9Ft1nls2xksaTfGc5JyU0D0%2FVOkszoxsiqBjQWSh7ezSKYLrq1MhczZsl4aA57hvu932JYI5O1zQ7K1NG1iajPu7%2FXYsnZ18OvO3uZDSnV111NSmTAa38ECgvSSP7d09lcHbpfe54S1%2B%2BzhXE7vfSpuGMF9HwzXaa8; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; .AspNetCore.Antiforgery.TS_lIcLqgyo=CfDJ8Gya9OMznX9Ft1nls2xksaSXTKLMU8ajtUp1dDTlkcJTL022u8bNU7i7S5Ay-rNv7Jzxkuj_fP34qIuuuCuFY4RsYX3KNgiIrCOi2I3Mzw3wFn1JdJSudfG_ytWp6DhX5WxP0xZgpN1jKkCdKHfphhg; arp_scroll_position=0; _ga=GA1.2.1013328165.1580805590; _gid=GA1.2.1577193730.1580805590; _ym_isad=2; _ym_visorc_42638619=w; arp_scroll_position=5
+
+------WebKitFormBoundaryY14yx1ZboANMKKbM
+Content-Disposition: form-data; name="ReturnUrl"
+
+/ClientDevice
+------WebKitFormBoundaryY14yx1ZboANMKKbM
+Content-Disposition: form-data; name="Email"
+
+test@safib.ru
+------WebKitFormBoundaryY14yx1ZboANMKKbM
+Content-Disposition: form-data; name="PasswordUser"
+
+1
+------WebKitFormBoundaryY14yx1ZboANMKKbM--
