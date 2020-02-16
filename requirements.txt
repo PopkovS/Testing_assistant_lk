@@ -1,3 +1,4 @@
+requests
 PyMsgBox==1.0.7
 pyparsing==2.4.6
 pyperclip==1.7.0

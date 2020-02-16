@@ -1,6 +1,6 @@
-from pages.locators import Links, TestData
-import pages.requests
 import psycopg2
+
+from .locators import TestData
 
 
 def db_connect(dbname='assistant_test_corp_linux', user='postgres',
@@ -41,8 +41,8 @@ def get_id_user():
 
 def edit_stausid(stat=0):
     conn, cursor = db_connect()
-
-    assert check_user_exist(), f"Невозможно получить id, Пользователя {TestData.TEST_USER} нет в базе"
+    stat = int(stat)
+    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
     cursor.execute('UPDATE public.astusers '
                    f'SET status = \'{stat}\''
                    f' WHERE email=\'{TestData.TEST_USER}\'')
@@ -52,7 +52,3 @@ def edit_stausid(stat=0):
                    f' WHERE "Email"=\'{TestData.TEST_USER}\'')
     conn.commit()
     db_disconnect()
-
-
-edit_stausid(2)
-# print(edit_stausid())

@@ -26,7 +26,7 @@ def browser(request):
         # options.add_argument("--headless")
         print("\nstart chrome browser for test..")
         browser = webdriver.Chrome(options=options)
-        browser.maximize_window()
+        # browser.maximize_window()
     elif browser_name == "firefox":
         fp = webdriver.FirefoxProfile()
         fp.set_preference("intl.accept_languages", user_language)

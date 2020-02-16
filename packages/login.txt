@@ -1,27 +1,27 @@
 POST http://lk.corp.ast.safib.ru/Account/Login HTTP/1.1
 Host: lk.corp.ast.safib.ru
 Connection: keep-alive
-Content-Length: 358
+Content-Length: 345
 Accept: */*
 X-Requested-With: XMLHttpRequest
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryD8XIuBTaRxZxXTyb
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0P0arSY3JOJ2sAUa
 Origin: http://lk.corp.ast.safib.ru
-Referer: http://lk.corp.ast.safib.ru/Account/Login?returnUrl=%2FClientDevice
+Referer: http://lk.corp.ast.safib.ru/Account/Login
 Accept-Encoding: gzip, deflate
 Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
-Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; _ga=GA1.2.1013328165.1580805590; .AspNetCore.Session=CfDJ8C0jsP%2B2KCNLqRnVniA7hYNxLxLHx%2FzRTg%2Bp3hSsty5TM%2BfvulQSVCYXxI%2B4S7VvMv8rG8w%2FQSrqOjC7iRFRCVPp2toOND5qvGOZkZEN2%2FRNhj21DhFYvU2xxPOEsIUFHXk1572d7Elj5EXzLWQqILtE0xzbQFZQ%2BE12LTz0pw8%2F; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1
+Cookie: _ym_uid=1580025599685707412; _ym_d=1580025599; _ga=GA1.2.1013328165.1580805590; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; .AspNetCore.Session=CfDJ8EQue5xPE7tLni3SXFo7h0A4hANc95kfayp%2ByIforLtQ6ohVGpMhEeIunf81L5TmNSJVEV5jjxtS2UgWRoDQgCMeaZ3%2FXWyWKE4qpodwznmgerq%2B43PC3ecAcTcN17v8TOp7bsCHgmwprX4VAhb26twmPBKvPsDvbME0QyxnVn5c; .AspNetCore.Antiforgery.mUEwzI9EnP0=CfDJ8EQue5xPE7tLni3SXFo7h0C5CdvN5DBYwCTN_znuPnq_vsR8ved0ENbZrYd267zs6_vZn6D4HO4ovaiuj-InDgalj61322jQvESnKY-R9E88rAqd_brwtnKY9FeGjhiswx9haPYiNrzdUp_uaUJHIUg; arp_scroll_position=0
 
-------WebKitFormBoundaryD8XIuBTaRxZxXTyb
+------WebKitFormBoundary0P0arSY3JOJ2sAUa
 Content-Disposition: form-data; name="ReturnUrl"
 
-/ClientDevice
-------WebKitFormBoundaryD8XIuBTaRxZxXTyb
+
+------WebKitFormBoundary0P0arSY3JOJ2sAUa
 Content-Disposition: form-data; name="Email"
 
 test@safib.ru
-------WebKitFormBoundaryD8XIuBTaRxZxXTyb
+------WebKitFormBoundary0P0arSY3JOJ2sAUa
 Content-Disposition: form-data; name="PasswordUser"
 
 1
-------WebKitFormBoundaryD8XIuBTaRxZxXTyb--
+------WebKitFormBoundary0P0arSY3JOJ2sAUa--
