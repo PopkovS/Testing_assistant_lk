@@ -52,5 +52,3 @@ def recount_length(my_filename):
         open(fr'../packages/{my_filename}.txt', 'w').close()
         fp.seek(0)
         fp.write(new_pack.encode("utf-8"))
-
-# 1137

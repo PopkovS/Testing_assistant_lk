@@ -1,6 +1,6 @@
 import psycopg2
 
-from .locators import TestData
+from pages.locators import LoginLocators, Links, TestData
 
 
 def db_connect(dbname='assistant_test_corp_linux', user='postgres',
@@ -39,16 +39,32 @@ def get_id_user():
     return id_user
 
 
-def edit_stausid(stat=0):
+def change_cells(table, column, new_val, where_col="email", where_val=TestData.TEST_USER):
     conn, cursor = db_connect()
-    stat = int(stat)
-    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
-    cursor.execute('UPDATE public.astusers '
-                   f'SET status = \'{stat}\''
-                   f' WHERE email=\'{TestData.TEST_USER}\'')
-
-    cursor.execute('UPDATE public."AspNetUsers"'
-                   f'SET "Status" = {stat}'
-                   f' WHERE "Email"=\'{TestData.TEST_USER}\'')
+    cursor.execute(f'UPDATE public.{table}'
+                   f' SET {column} = \'{new_val}\''
+                   f' WHERE {where_col} =\'{where_val}\'')
     conn.commit()
     db_disconnect()
+
+
+def change_stausid(stat=0):
+    stat = int(stat)
+    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
+    change_cells(table="astusers", column="status", new_val=stat)
+    change_cells(table="\"AspNetUsers\"", column="\"Status\"", new_val=stat, where_col="\"Email\"")
+
+
+def change_direct_control(val="True"):
+    change_cells(table="systemparameters", column="value", new_val=val, where_col="type", where_val=118)
+
+
+def change_twofactor(val="true"):
+    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
+    change_cells(table="astusers", column="twofactorsignneeded", new_val=val)
+    change_cells(table='"AspNetUsers"', column='"TwoFactorEnabled"', new_val=val, where_col='"Email"',
+                 where_val=TestData.TEST_USER)
+
+
+change_stausid(0)
+change_twofactor("false")
