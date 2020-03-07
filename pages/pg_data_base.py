@@ -17,11 +17,11 @@ def db_disconnect():
     cursor.close()
 
 
-def check_user_exist():
+def check_user_exist(user=TestData.TEST_USER_NORMAL):
     conn, cursor = db_connect()
     cursor.execute('SELECT email '
                    'FROM public.astusers'
-                   f' WHERE email=\'{TestData.TEST_USER}\'')
+                   f' WHERE email=\'{user}\'')
     records = cursor.fetchall()
     if not records:
         return False
@@ -29,17 +29,20 @@ def check_user_exist():
         return True
 
 
-def get_id_user():
+def get_id_user(user=TestData.TEST_USER_NORMAL):
     conn, cursor = db_connect()
-    assert check_user_exist(), f"Невозможно получить id, Пользователя {TestData.TEST_USER} нет в базе"
+    assert check_user_exist(user), f"Невозможно получить id, Пользователя {user} нет в базе"
     cursor.execute('SELECT id '
                    'FROM public.astusers'
-                   f' WHERE email=\'{TestData.TEST_USER}\'')
-    id_user = cursor.fetchall()[0][0]
-    return id_user
+                   f' WHERE email=\'{user}\'')
+    result = cursor.fetchall()
+    print(result)
+    if result:
+        return result[0][0]
 
 
-def change_cells(table, column, new_val, where_col="email", where_val=TestData.TEST_USER):
+
+def change_cells(table, column, new_val, where_col="email", where_val=TestData.TEST_USER_NORMAL):
     conn, cursor = db_connect()
     cursor.execute(f'UPDATE public.{table}'
                    f' SET {column} = \'{new_val}\''
@@ -48,23 +51,58 @@ def change_cells(table, column, new_val, where_col="email", where_val=TestData.T
     db_disconnect()
 
 
-def change_stausid(stat=0):
+def get_cell(search_row="id", table="astusers", where_col="email", val=TestData.TEST_USER_NORMAL):
+    conn, cursor = db_connect()
+    cursor.execute(f'SELECT {search_row} '
+                   f'FROM public.{table}'
+                   f' WHERE {where_col}=\'{val}\'')
+    cell = cursor.fetchall()[0][0]
+    return cell
+
+
+def delete_row(table="astclientdevices", column="title", val="'Наименование'"):
+    conn, cursor = db_connect()
+    cursor.execute(f"DELETE FROM public.{table} WHERE {column} ={val}")
+    conn.commit()
+    db_disconnect()
+
+
+def change_stausid(stat=0, user=TestData.TEST_USER_NORMAL):
     stat = int(stat)
-    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
+    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {user} нет в базе"
     change_cells(table="astusers", column="status", new_val=stat)
-    change_cells(table="\"AspNetUsers\"", column="\"Status\"", new_val=stat, where_col="\"Email\"")
+    change_cells(table="\"AspNetUsers\"", column="\"Status\"", new_val=stat, where_col="\"Email\"", )
 
 
 def change_direct_control(val="True"):
     change_cells(table="systemparameters", column="value", new_val=val, where_col="type", where_val=118)
 
 
-def change_twofactor(val="true"):
-    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {TestData.TEST_USER} нет в базе"
+def change_auth_ad(val="True"):
+    change_cells(table="systemparameters", column="value", new_val=val, where_col="type", where_val=135)
+    if val == "True":
+        change_cells(table="systemparameters", column="value", new_val="test.local;safib.ru;test2.test1.local",
+                     where_col="type", where_val=136)
+    else:
+        change_cells(table="systemparameters", column="value", new_val="", where_col="type", where_val=136)
+
+
+def change_twofactor(val="true", user=TestData.TEST_USER_NORMAL):
+    assert check_user_exist(), f"Невозможно изменить данные, Пользователя {user} нет в базе"
     change_cells(table="astusers", column="twofactorsignneeded", new_val=val)
     change_cells(table='"AspNetUsers"', column='"TwoFactorEnabled"', new_val=val, where_col='"Email"',
-                 where_val=TestData.TEST_USER)
+                 where_val=user)
 
 
-change_stausid(0)
-change_twofactor("false")
+def del_new_user(user=TestData.NEW_USER):
+    id = get_id_user(user=f'{user}')
+    delete_row(table='astclientdevicegroups', column='userid',
+               val=(f"'{id}'"))
+    delete_row(table='"AspNetUsers"', column='"Email"', val=(f"'{user}'"))
+    delete_row(table='astusers', column='email', val=(f"'{user}'"))
+
+# if
+# del_new_user()
+print(check_user_exist("testassistantNewUser@mailforspam.com"))
+# change_direct_control(val="False")
+

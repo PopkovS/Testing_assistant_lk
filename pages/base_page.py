@@ -4,7 +4,7 @@ import os
 import socket
 import sys
 import traceback
-
+import pages.pg_data_base as pgdb
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -54,12 +54,22 @@ class BasePage():
         if f"{self.url}" not in current_link:
             self.open()
 
+    def change_user_stat(self, stat=0, tfac="false", user=TestData.TEST_USER_NORMAL):
+        """0-активен, 1 - Заблокирован, 2 - Не подтверждён, 3 - В архиве"""
+        stat = int(stat)
+        pgdb.change_stausid(stat, user)
+        pgdb.change_twofactor(tfac,user)
+
+    def change_sys_paran(self, auth_ad="True", dir_control="True"):
+        pgdb.change_auth_ad(auth_ad)
+        pgdb.change_direct_control(dir_control)
+
     def save_screen(self):
         name_scr = traceback.extract_stack(None, 2)[0][2]
         print(name_scr)
         self.browser.save_screenshot(f".\\screenshots\\{name_scr}.png")
 
-    def new_tab(self, link=Links.MAIL_FOR_SPAM_LINK + TestData.TEST_USER.split("@")[0], i=1):
+    def new_tab(self, link=Links.MAIL_FOR_SPAM_NORM_US, i=1):
         self.browser.execute_script(f'window.open("{link}","_blank");')
         self.switch_to_tab(i)
 
@@ -71,8 +81,8 @@ class BasePage():
         # new_window = self.browser.window_handles[i]
         self.browser.close()
 
-    def get_text_from_config(self, section, var):
-        path = os.path.join(sys.path[1], "test_data.ini")
+    def get_text_from_config(self, section, var, file="test_data_message.ini"):
+        path = os.path.join(sys.path[1], file)
         config = configparser.ConfigParser()
         config.read(path, 'utf-8')
         text = config[section][var]
@@ -86,20 +96,28 @@ class BasePage():
         text = self.get_text_from_config("ErrFieldMess", var)
         return text
 
-    def logout(self):
-        self.should_be_logged_in()
+    def login(self, email=TestData.TEST_USER_AD, password=TestData.PASSWORD_USER_AD):
+        email_field = self.browser.find_element(*LoginLocators.EMAIL_FIELD)
+        email_field.send_keys(email)
+        password_field = self.browser.find_element(*LoginLocators.PASSWORD_USER_FIELD)
+        password_field.send_keys(password)
+        submit = self.browser.find_element(*LoginLocators.LOGIN_SUBMIT)
+        submit.click()
+
+    def logout(self, name=TestData.TEST_USER_NAME):
+        self.should_be_logged_in(name)
         avatar_user = self.browser.find_element(*BaseLocators.USER_MENU)
         avatar_user.click()
         exit_but = self.browser.find_element(*BaseLocators.LOGOUT_BUT)
         exit_but.click()
 
-    def should_be_logged_in(self):
+    def should_be_logged_in(self, name=TestData.TEST_USER_NAME):
         assert self.is_element_present(*BaseLocators.USER_MENU,
                                        timeout=10), "Не удалось найти ссылку c именем пользователя на " \
                                                     "странице "
         text_user_name = self.browser.find_element(*BaseLocators.USER_MENU).text
-        assert text_user_name == TestData.TEST_USER_NAME, f"Фактическое имя пользователя {text_user_name} не " \
-                                                          f"совпадает с ожидаемым {TestData.TEST_USER_NAME} "
+        assert text_user_name == name, f"Фактическое имя пользователя {text_user_name} не " \
+                                                          f"совпадает с ожидаемым {name} "
 
     def should_be_alert(self, var, expec=5):
         alert = LoginLocators.ERR_ALERT

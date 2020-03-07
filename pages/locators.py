@@ -3,27 +3,30 @@ from selenium.webdriver.common.by import By
 from faker import Faker
 
 
-# from pages.pg_data_base import PGDB
-
-class Links():
-    MAIN_LINK = "http://lk.corp.ast.safib.ru/"
-    LOGIN_LINK = MAIN_LINK + "Account/Login"
-    ACCESS_RECOVERY_LINK = MAIN_LINK + "Account/SetPassword"
-    SET_PASSWORD_LINK = MAIN_LINK + "Account/SetPassword"
-    MAIL_FOR_SPAM_LINK = "https://www.mailforspam.co/mail/"
-
-
 class TestData():
     f = Faker()
     FAKE_EMAIL = f.email()
     FAKE_PASSWORD = f.password()
-    VALID_EMAIL = "PopkovSergei0805@yandex.ru"
-    VALID_PASSWORD = "123"
-    TEST_USER = "testassistanttest@mailforspam.com"
-    TEST_USER_NAME = "test_user"
+    TEST_USER_AD = "test"
+    TEST_USER_EMAIL_AD = "testassistantAD@mailforspam.com"
+    PASSWORD_USER_AD = "Password1"
+    TEST_USER_NORMAL = "testassistantNormal@mailforspam.com"
+    PASSWORD_USER_NORMAL = "Password2"
+    TEST_USER_NAME = TEST_USER_NORMAL.replace(".", "@").split("@")[0]
+    NEW_USER = "testassistantNewUser@mailforspam.com"
+    NEW_USER_NAME = NEW_USER.replace(".", "@").split("@")[0]
 
 
-# class ErrorAlertText():
+class Links():
+    MAIN_LINK = "http://lk.corp.ast.safib.ru"
+    LOGIN_LINK = MAIN_LINK + "/Account/Login"
+    ACCESS_RECOVERY_LINK = MAIN_LINK + "/Account/SetPassword"
+    MY_DEVICE = MAIN_LINK + "/ClientDevice"
+    MY_DEVICE_CREATE_GROUP = MY_DEVICE + "/CreateGroup?orgid=0"
+    SET_PASSWORD_LINK = MAIN_LINK + "/Account/SetPassword"
+    MAIL_FOR_SPAM_LINK = "https://www.mailforspam.co/mail/"
+    MAIL_FOR_SPAM_NORM_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_NORMAL.lower().split("@")[0]
+    MAIL_FOR_SPAM_AD_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_EMAIL_AD.lower().split("@")[0]
 
 
 class LoginLocators():
@@ -34,7 +37,6 @@ class LoginLocators():
     LOGIN_SUBMIT = (By.CSS_SELECTOR, ".btn.btn-primary.block.full-width.m-b")
     SUBMIT_CONF_PASS = (By.CSS_SELECTOR, "#btnOk.btn.btn-primary.block.full-width.m-b")
     ERR_MESS_EMAIL = (By.CSS_SELECTOR, "#Email+span")
-    # ERR_MESS_EMAIL = (By.CSS_SELECTOR, "#Email+[data-valmsg-for=\"Email\"]")
     ERR_MESS_PASSWORD = (By.CSS_SELECTOR, ".s-error-message.field-validation-valid[data-valmsg-for=\"PasswordUser\"]")
     ERR_MESS_CHANGE_PASS = (By.CSS_SELECTOR, "span[for=\"Password\"]")
     ERR_MESS_CHANGE_CONF_PASS = (By.CSS_SELECTOR, "span[for=\"ConfirmPassword\"]")
@@ -42,6 +44,21 @@ class LoginLocators():
     GO_TO_SET_PASS_BUTT = (By.CSS_SELECTOR, ".other [href=\"/Account/SetPassword\"]")
     SET_PASS_TITLE = (By.CSS_SELECTOR, ".account-login-cont>.info-capt")
     CONF_CODE_FIELD = (By.CSS_SELECTOR, "[placeholder=\"Код подтверждения\"]")
+
+
+class MyDevicesLocators():
+    ADD_GROUP_BUTTON = (By.CSS_SELECTOR, '[href="/ClientDevice/CreateGroup?orgid=0"]')
+    ADD_DEVICE_BUTTON = (By.CSS_SELECTOR, '[href="/ClientDevice/Create?orgid=0"]')
+    REFRESH_GROUP_LIST = (By.CSS_SELECTOR, "#ClientDeviceTable_0_refresh")
+    SAVE_GROUP_BUTTON = (By.CSS_SELECTOR, '.ctrls>.btn.btn-primary')
+    CANCEL_GROUP_BUTTON = (By.CSS_SELECTOR, '.ctrls>.btn.btn-primary+.btn.btn-white')
+    GROUP_NAME_FIELD = (By.CSS_SELECTOR, ".text-box.single-line")
+    SELECT_PARENT_GROUP = (By.CSS_SELECTOR, "#select2-GroupId-container")
+    HID_FIELD = (By.CSS_SELECTOR, "#HID")
+    NAME_DEVICE_FIELD = (By.CSS_SELECTOR, "#Name")
+    DESCRIPTION_DEVICE_FIELD = (By.CSS_SELECTOR, "##Description")
+    PASS_DEVICE_FIELD = (By.CSS_SELECTOR, "#Password")
+    PASS_CONF_DEVICE_FIELD = (By.CSS_SELECTOR, "#PasswordConfirm")
 
 
 class BaseLocators():
@@ -54,5 +71,3 @@ class MailForSpamLocators():
     LETTERS = (By.CSS_SELECTOR, "tr[onclick]")
     LINK_GO_TO_CHANGE_PASS = (By.XPATH, "//a[text()=\"ссылке\"]")
     CONFIRMATION_CODE = (By.CSS_SELECTOR, "[align=\"left\"]>div>b")
-
-

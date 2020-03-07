@@ -12,20 +12,18 @@ from pages.locators import LoginLocators, MailForSpamLocators, Links, TestData
 
 class MailForSpamPage(BasePage):
 
-    def check_mail(self, old_lett):
+    def check_mail(self, old_lett, link=Links.MAIL_FOR_SPAM_NORM_US):
         i = 1
         while True:
-            letter_id = last_letter_id()
+            letter_id = last_letter_id(link)
+            check_button = self.browser.find_element(*MailForSpamLocators.CHECK_BUTTON)
+            check_button.click()
             if old_lett < letter_id:
-                check_button = self.browser.find_element(*MailForSpamLocators.CHECK_BUTTON)
-                check_button.click()
                 break
             else:
                 assert i <= 60, f"Не удалось получить нужное письмо id предыдущего {old_lett}, id последнего {letter_id} "
-                check_button = self.browser.find_element(*MailForSpamLocators.CHECK_BUTTON)
-                check_button.click()
                 i += 1
-                continue
+            continue
 
     def open_first_letter(self):
         letters = self.browser.find_elements(*MailForSpamLocators.LETTERS)
@@ -38,12 +36,10 @@ class MailForSpamPage(BasePage):
 
     def get_conf_code(self):
         self.open_first_letter()
-        print(self.browser.find_element(*MailForSpamLocators.CONFIRMATION_CODE).text)
         pypc.copy(self.browser.find_element(*MailForSpamLocators.CONFIRMATION_CODE).text)
 
 
-def last_letter_id():
-    link = Links.MAIL_FOR_SPAM_LINK + TestData.TEST_USER.split("@")[0]
+def last_letter_id(link=Links.MAIL_FOR_SPAM_NORM_US):
     response = requests.get(link).text.split("\n")
     id_list = []
     for i in response:
