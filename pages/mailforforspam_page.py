@@ -29,7 +29,7 @@ class MailForSpamPage(BasePage):
         letters = self.browser.find_elements(*MailForSpamLocators.LETTERS)
         letters[0].click()
 
-    def go_to_password_conf(self):
+    def go_to_link_from_letter(self):
         self.open_first_letter()
         link_to_change_pass = self.browser.find_element(*MailForSpamLocators.LINK_GO_TO_CHANGE_PASS)
         link_to_change_pass.click()

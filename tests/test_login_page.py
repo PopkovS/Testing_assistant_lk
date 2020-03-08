@@ -4,7 +4,6 @@ import pytest
 
 from pages.locators import Links, TestData
 from pages.login_page import LoginPage, LoginLocators
-from pages.mailforforspam_page import MailForSpamPage
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -50,9 +49,6 @@ class TestsLoginNegative():
         page.login(f"<{TestData.TEST_USER_NORMAL}>", TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("dang_cont")
 
-    # def test_login_with_incorrect_email(self, browser):
-    #     page.login(f"1111{TestData.TEST_USER_EMAIL}", TestData.PASSWORD_USER_AD)
-    #     page.should_be_alert("err_ad", expec=10)
     def test_login_with_incorrect_email(self, browser):
         page.login(f"1111{TestData.TEST_USER_NORMAL}", TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("err_pass_or_log")
@@ -90,13 +86,12 @@ class TestsLoginNegative():
         page.change_sys_paran(auth_ad="False")
 
 
-class TestsSetPasswordNegative():
+class TestsSetPasswordNegativeForEmail():
     @pytest.fixture(scope="class", autouse=True)
     def setup_for_set_pass_neg_class(self, browser):
         page.go_to_set_password_page()
         yield
         page.go_to_page()
-        sleep(5)
 
     @pytest.fixture(scope="function", autouse=True)
     def setup_for_set_pass_neg_function(self, browser):
@@ -151,7 +146,7 @@ class TestsSetPasswordConfirmNegative():
         page.go_to_set_password_conf_page()
         yield page
         page.close_tab()
-        page.switch_to_tab(0)
+        # page.switch_to_tab(0)
         page.go_to_page()
         sleep(3)
 
@@ -171,7 +166,7 @@ class TestsSetPasswordConfirmNegative():
     def test_setpassword_conf_with_empty_password(self, browser):
         page.set_password_confirm("", TestData.PASSWORD_USER_NORMAL)
         page.click_submit()
-        page.should_be_err_mess("pass_empty_misha",
+        page.should_be_err_mess("pass_empty",
                                 LoginLocators.ERR_MESS_CHANGE_PASS)
         page.should_be_err_mess("pass_and_cof_pass_diff",
                                 LoginLocators.ERR_MESS_CHANGE_CONF_PASS)

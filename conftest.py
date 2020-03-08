@@ -1,6 +1,7 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import pages.pg_data_base as pgdb
 
 
 def pytest_addoption(parser):

@@ -22,11 +22,14 @@ def check_user_exist(user=TestData.TEST_USER_NORMAL):
     cursor.execute('SELECT email '
                    'FROM public.astusers'
                    f' WHERE email=\'{user}\'')
-    records = cursor.fetchall()
-    if not records:
-        return False
-    else:
-        return True
+    astusers = bool(cursor.fetchall())
+    cursor.execute(f'SELECT "Email" '
+                   f'FROM public."AspNetUsers" '
+                   f'WHERE "Email" = \'{user}\'')
+    aspNetUsers = bool(cursor.fetchall())
+    assert astusers == aspNetUsers, f"Ответ от таблиц отличается. " \
+                                    f"astusers = '{astusers}', AspNetUsers = '{aspNetUsers}'"
+    return astusers and aspNetUsers
 
 
 def get_id_user(user=TestData.TEST_USER_NORMAL):
@@ -39,7 +42,6 @@ def get_id_user(user=TestData.TEST_USER_NORMAL):
     print(result)
     if result:
         return result[0][0]
-
 
 
 def change_cells(table, column, new_val, where_col="email", where_val=TestData.TEST_USER_NORMAL):
@@ -95,14 +97,12 @@ def change_twofactor(val="true", user=TestData.TEST_USER_NORMAL):
 
 
 def del_new_user(user=TestData.NEW_USER):
+    assert check_user_exist(user), f"Пользователя '{user}' нет в бд, удаление не возможно"
     id = get_id_user(user=f'{user}')
     delete_row(table='astclientdevicegroups', column='userid',
                val=(f"'{id}'"))
     delete_row(table='"AspNetUsers"', column='"Email"', val=(f"'{user}'"))
     delete_row(table='astusers', column='email', val=(f"'{user}'"))
 
-# if
-# del_new_user()
-print(check_user_exist("testassistantNewUser@mailforspam.com"))
+# print(check_user_exist("testassistantNewUser@mailforspam.com"))
 # change_direct_control(val="False")
-

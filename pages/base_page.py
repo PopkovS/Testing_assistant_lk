@@ -80,6 +80,7 @@ class BasePage():
     def close_tab(self, i=1):
         # new_window = self.browser.window_handles[i]
         self.browser.close()
+        self.switch_to_tab(0)
 
     def get_text_from_config(self, section, var, file="test_data_message.ini"):
         path = os.path.join(sys.path[1], file)
@@ -96,12 +97,12 @@ class BasePage():
         text = self.get_text_from_config("ErrFieldMess", var)
         return text
 
-    def login(self, email=TestData.TEST_USER_AD, password=TestData.PASSWORD_USER_AD):
+    def login(self, email=TestData.TEST_USER_NORMAL, password=TestData.PASSWORD_USER_NORMAL):
         email_field = self.browser.find_element(*LoginLocators.EMAIL_FIELD)
         email_field.send_keys(email)
         password_field = self.browser.find_element(*LoginLocators.PASSWORD_USER_FIELD)
         password_field.send_keys(password)
-        submit = self.browser.find_element(*LoginLocators.LOGIN_SUBMIT)
+        submit = self.browser.find_element(*BaseLocators.SUBMIT_BUTTON)
         submit.click()
 
     def logout(self, name=TestData.TEST_USER_NAME):
@@ -119,12 +120,12 @@ class BasePage():
         assert text_user_name == name, f"Фактическое имя пользователя {text_user_name} не " \
                                                           f"совпадает с ожидаемым {name} "
 
-    def should_be_alert(self, var, expec=5):
+    def should_be_alert(self, var, expec=5, text=""):
         alert = LoginLocators.ERR_ALERT
         wait = WebDriverWait(self.browser, expec)
         alert_text_expected = self.text_alert(var)
         alert_err_text = wait.until(EC.visibility_of_element_located((alert))).text
-        assert alert_text_expected == alert_err_text, f"Полученное сообщение в алёрте\"{alert_err_text}\" не совподает с " \
+        assert alert_text_expected.replace("@&&@", text) == alert_err_text, f"Полученное сообщение в алёрте\"{alert_err_text}\" не совподает с " \
                                                       f"ожидаемым \"{alert_text_expected}\" "
 
     def should_be_err_mess(self, var, locator):
@@ -138,3 +139,15 @@ class BasePage():
     def should_be_match_link(self, link):
         current_link = self.browser.current_url
         assert link in current_link, f"Текщий адрес \"{current_link}\" не содержит ожидаемого фрагмента \"{link}\""
+
+    def should_be_title_page(self, timeout=5, file_name="OtherText", text="set_pass",
+                             locator=LoginLocators.SET_PASS_TITLE):
+        title_ps = locator
+        text_expected = self.get_text_from_config(file_name, text)
+        err_text = WebDriverWait(self.browser, timeout).until(EC.visibility_of_element_located((title_ps))).text
+        assert text_expected == err_text, f'Полученный заголовок страницы "{err_text}" отличается ' \
+                                          f'от ожидаемого "{text_expected}" '
+
+    def should_be_no_more_necessary_alert(self, n=1):
+        number_of_alerts = len(self.browser.find_elements(*LoginLocators.ERR_ALERT))
+        assert number_of_alerts == n, f"Количество алертов на экрване ({number_of_alerts}) не соответствует ожидаемому ({n})"

@@ -20,6 +20,8 @@ class TestData():
 class Links():
     MAIN_LINK = "http://lk.corp.ast.safib.ru"
     LOGIN_LINK = MAIN_LINK + "/Account/Login"
+    REGISTRATION_LINK = MAIN_LINK + "/Account/Register"
+    REGISTRATION_SEND_MESS = MAIN_LINK + "/Account/SendMessageRegister"
     ACCESS_RECOVERY_LINK = MAIN_LINK + "/Account/SetPassword"
     MY_DEVICE = MAIN_LINK + "/ClientDevice"
     MY_DEVICE_CREATE_GROUP = MY_DEVICE + "/CreateGroup?orgid=0"
@@ -27,14 +29,12 @@ class Links():
     MAIL_FOR_SPAM_LINK = "https://www.mailforspam.co/mail/"
     MAIL_FOR_SPAM_NORM_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_NORMAL.lower().split("@")[0]
     MAIL_FOR_SPAM_AD_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_EMAIL_AD.lower().split("@")[0]
+    MAIL_FOR_SPAM_NEW_US = MAIL_FOR_SPAM_LINK + TestData.NEW_USER.lower().split("@")[0]
 
 
 class LoginLocators():
     EMAIL_FIELD = (By.CSS_SELECTOR, "#Email[name=\"Email\"]")
     PASSWORD_USER_FIELD = (By.CSS_SELECTOR, "#PasswordUser[name=\"PasswordUser\"]")
-    PASSWORD = (By.CSS_SELECTOR, "#Password")
-    PASSWORD_CONFIRM = (By.CSS_SELECTOR, "#ConfirmPassword")
-    LOGIN_SUBMIT = (By.CSS_SELECTOR, ".btn.btn-primary.block.full-width.m-b")
     SUBMIT_CONF_PASS = (By.CSS_SELECTOR, "#btnOk.btn.btn-primary.block.full-width.m-b")
     ERR_MESS_EMAIL = (By.CSS_SELECTOR, "#Email+span")
     ERR_MESS_PASSWORD = (By.CSS_SELECTOR, ".s-error-message.field-validation-valid[data-valmsg-for=\"PasswordUser\"]")
@@ -46,6 +46,16 @@ class LoginLocators():
     CONF_CODE_FIELD = (By.CSS_SELECTOR, "[placeholder=\"Код подтверждения\"]")
 
 
+class RegistrationLocators():
+    GO_TO_REGISTRATION_PAGE = (By.CSS_SELECTOR, ".register[href=\"/Account/Register\"]")
+    GO_TO_LOGIN_PAGE_FROM_REG = (By.CSS_SELECTOR, '.s-button[href="/"]')
+    NAME_USER_FIELD = (By.CSS_SELECTOR, '#Name[name="Name"]')
+    REGISTRATION_TITLE = (By.CSS_SELECTOR, ".account-login-cont>.header")
+    REG_CONFIRM_TITLE = (By.CSS_SELECTOR, ".account-login-cont>.info-capt")
+    REG_CONFIRM_TEXT = (By.CSS_SELECTOR, ".account-login-cont>.info")
+
+
+
 class MyDevicesLocators():
     ADD_GROUP_BUTTON = (By.CSS_SELECTOR, '[href="/ClientDevice/CreateGroup?orgid=0"]')
     ADD_DEVICE_BUTTON = (By.CSS_SELECTOR, '[href="/ClientDevice/Create?orgid=0"]')
@@ -54,16 +64,23 @@ class MyDevicesLocators():
     CANCEL_GROUP_BUTTON = (By.CSS_SELECTOR, '.ctrls>.btn.btn-primary+.btn.btn-white')
     GROUP_NAME_FIELD = (By.CSS_SELECTOR, ".text-box.single-line")
     SELECT_PARENT_GROUP = (By.CSS_SELECTOR, "#select2-GroupId-container")
-    HID_FIELD = (By.CSS_SELECTOR, "#HID")
-    NAME_DEVICE_FIELD = (By.CSS_SELECTOR, "#Name")
     DESCRIPTION_DEVICE_FIELD = (By.CSS_SELECTOR, "##Description")
-    PASS_DEVICE_FIELD = (By.CSS_SELECTOR, "#Password")
-    PASS_CONF_DEVICE_FIELD = (By.CSS_SELECTOR, "#PasswordConfirm")
 
 
 class BaseLocators():
+    EMAIL_FIELD = (By.CSS_SELECTOR, "#Email[name=\"Email\"]")
+    PASSWORD_FIELD = (By.CSS_SELECTOR, "#Password")
+    PASSWORD_CONFIRM_FIELD = (By.CSS_SELECTOR, "#ConfirmPassword")
+    HID_FIELD = (By.CSS_SELECTOR, "#HID")
+    NAME_FIELD = (By.CSS_SELECTOR, "#Name")
+    ERR_EMAIL_FIELD = (By.CSS_SELECTOR, "#Email[name=\"Email\"]+span")
+    ERR_HID_FIELD = (By.CSS_SELECTOR, "#HID+span")
+    ERR_NAME_FIELD = (By.CSS_SELECTOR, "#Name+span")
+    ERR_PAS_FIELD = (By.CSS_SELECTOR, "#Password+span")
+    ERR_PAS_CONF_FIELD = (By.CSS_SELECTOR, "#ConfirmPassword+span")
     USER_MENU = (By.CSS_SELECTOR, ".dropdown-toggle>.uname")
     LOGOUT_BUT = (By.CSS_SELECTOR, ".btn.btn-primary.exit[href=\"/Account/Logoff\"]")
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, ".btn.btn-primary.block.full-width.m-b")
 
 
 class MailForSpamLocators():

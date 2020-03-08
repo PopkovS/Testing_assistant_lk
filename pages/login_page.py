@@ -1,15 +1,10 @@
-from time import sleep
-
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
-import pages.requests_helper as req
+import pyperclip as pypc
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-import pyperclip as pypc
-import pages.pg_data_base as pgdb
+
 from .base_page import BasePage
+from .locators import LoginLocators, Links, TestData, BaseLocators
 from .mailforforspam_page import MailForSpamPage, last_letter_id
-from .locators import LoginLocators, Links, TestData
 
 
 class LoginPage(BasePage):
@@ -24,9 +19,9 @@ class LoginPage(BasePage):
         self.browser.find_element(*LoginLocators.SUBMIT_CONF_PASS).click()
 
     def set_password_confirm(self, password, password_conf):
-        password_field = self.browser.find_element(*LoginLocators.PASSWORD)
+        password_field = self.browser.find_element(*BaseLocators.PASSWORD_FIELD)
         password_field.send_keys(password)
-        password_field = self.browser.find_element(*LoginLocators.PASSWORD_CONFIRM)
+        password_field = self.browser.find_element(*BaseLocators.PASSWORD_CONFIRM_FIELD)
         password_field.send_keys(password_conf)
         self.click_submit()
 
@@ -51,12 +46,12 @@ class LoginPage(BasePage):
         if f"{Links.SET_PASSWORD_LINK}Confirm?email={user}" not in current_link:
             self.go_to_set_password_page()
             self.set_password(user)
-            self.should_be_title_set_pass()
+            self.should_be_title_page()
             self.new_tab()
             print(f"Старый счетчик писем {old_lett}")
             mail_page = MailForSpamPage(self.browser, self.browser.current_url)
             mail_page.check_mail(old_lett)
-            mail_page.go_to_password_conf()
+            mail_page.go_to_link_from_letter()
 
     def get_conf_code(self, link=Links.MAIL_FOR_SPAM_NORM_US):
         old_lett = last_letter_id(link)
@@ -68,7 +63,7 @@ class LoginPage(BasePage):
         mail_page.switch_to_tab(0)
 
     def click_submit(self):
-        submit = self.browser.find_element(*LoginLocators.LOGIN_SUBMIT)
+        submit = self.browser.find_element(*BaseLocators.SUBMIT_BUTTON)
         submit.click()
 
     def fill_password(self, password):
@@ -86,13 +81,4 @@ class LoginPage(BasePage):
         locator = LoginLocators.ERR_MESS_EMAIL
         self.should_be_err_mess(var, locator)
 
-    def should_be_title_set_pass(self, timeout=5):
-        title_ps = LoginLocators.SET_PASS_TITLE
-        text_expected = self.get_text_from_config("OtherText", "set_pass")
-        err_text = WebDriverWait(self.browser, timeout).until(EC.visibility_of_element_located((title_ps))).text
-        assert text_expected == err_text, f'Полученный заголовок страницы "{err_text}" отличается ' \
-                                          f'от ожидаемого "{text_expected}" '
 
-    def should_be_no_more_necessary_alert(self, n=1):
-        number_of_alerts = len(self.browser.find_elements(*LoginLocators.ERR_ALERT))
-        assert number_of_alerts == n, f"Количество алертов на экрване ({number_of_alerts}) не соответствует ожидаемому ({n})"
