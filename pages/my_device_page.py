@@ -10,7 +10,7 @@ from pages.login_page import LoginLocators
 class MyDevicePage(BasePage):
     def go_to_my_devices(self):
         self.login_from_my_dev()
-        self.go_to_page()
+        self.open()
 
     def go_to_create_group(self):
         self.login_from_my_dev()

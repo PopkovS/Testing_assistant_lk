@@ -16,8 +16,10 @@ class RegistrationPage(BasePage):
             self.browser.get(Links.REGISTRATION_LINK)
         self.should_be_title_page(text="registration", locator=RegistrationLocators.REGISTRATION_TITLE)
 
-    def go_to_account_activation(self, link=Links.MAIL_FOR_SPAM_NEW_US):
-        old_lett = last_letter_id(link)
+    def old_letters_count(self, link=Links.MAIL_FOR_SPAM_NEW_US):
+        return last_letter_id(link)
+
+    def go_to_account_activation(self, old_lett, link=Links.MAIL_FOR_SPAM_NEW_US):
         self.new_tab(link=link)
         print(f"Старый счетчик писем {old_lett}")
         mail_page = MailForSpamPage(self.browser, self.browser.current_url)
@@ -38,11 +40,11 @@ class RegistrationPage(BasePage):
         conf_password_field.send_keys(conf_password)
         self.submit_click()
 
-    def login_new_user(self):
-        self.login(email=TestData.NEW_USER, password=TestData.PASSWORD_USER_NORMAL)
-        self.should_be_logged_in(name=TestData.NEW_USER_NAME)
-        self.logout(name=TestData.NEW_USER_NAME)
-
+    def login_new_user(self, email=TestData.NEW_USER, password=TestData.PASSWORD_USER_NORMAL,
+                       name=TestData.NEW_USER_NAME):
+        self.login(email=email, password=password)
+        self.should_be_logged_in(name=name)
+        self.logout(name=name)
 
     def submit_click(self):
         self.browser.find_element(*BaseLocators.SUBMIT_BUTTON).click()
@@ -62,13 +64,13 @@ class RegistrationPage(BasePage):
     def should_be_user_in_bd(self, user=TestData.NEW_USER):
         assert pgdb.check_user_exist(user), f"Пользователя {user} нет в базе данных, что то пошло не так"
 
-    def should_be_success_reg_page(self):
+    def should_be_success_reg_page(self, email=TestData.NEW_USER):
         self.should_be_title_page(text="thanks_for_reg")
         self.is_element_present(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG)
-        self.should_be_match_link(link=Links.REGISTRATION_SEND_MESS + "?email=" + TestData.NEW_USER)
+        self.should_be_match_link(link=Links.REGISTRATION_SEND_MESS + "?email=" + email)
 
-    def should_be_reg_confirm_page(self):
+    def should_be_reg_confirm_page(self, email=TestData.NEW_USER):
         self.should_be_title_page(text="reg_confirm", locator=RegistrationLocators.REG_CONFIRM_TITLE)
         self.should_be_title_page(text="reg_confirm_text", locator=RegistrationLocators.REG_CONFIRM_TEXT)
         self.is_element_present(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG)
-        self.should_be_match_link(link="?email=" + TestData.NEW_USER)
+        self.should_be_match_link(link="?email=" + email)

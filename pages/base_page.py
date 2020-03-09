@@ -50,9 +50,9 @@ class BasePage():
         return True
 
     def go_to_page(self):
-        current_link = self.browser.current_url
-        if f"{self.url}" not in current_link:
-            self.open()
+        # current_link = self.browser.current_url
+        # if f"{self.url}" not in current_link:
+        self.open()
 
     def change_user_stat(self, stat=0, tfac="false", user=TestData.TEST_USER_NORMAL):
         """0-активен, 1 - Заблокирован, 2 - Не подтверждён, 3 - В архиве"""
@@ -60,7 +60,7 @@ class BasePage():
         pgdb.change_stausid(stat, user)
         pgdb.change_twofactor(tfac,user)
 
-    def change_sys_paran(self, auth_ad="True", dir_control="True"):
+    def change_sys_paran(self, auth_ad="True", dir_control="False"):
         pgdb.change_auth_ad(auth_ad)
         pgdb.change_direct_control(dir_control)
 
@@ -125,7 +125,7 @@ class BasePage():
         wait = WebDriverWait(self.browser, expec)
         alert_text_expected = self.text_alert(var)
         alert_err_text = wait.until(EC.visibility_of_element_located((alert))).text
-        assert alert_text_expected.replace("@&&@", text) == alert_err_text, f"Полученное сообщение в алёрте\"{alert_err_text}\" не совподает с " \
+        assert alert_text_expected.replace("@&&@", text) == alert_err_text, f"Полученное сообщение в алёрте \"{alert_err_text}\" не совподает с " \
                                                       f"ожидаемым \"{alert_text_expected}\" "
 
     def should_be_err_mess(self, var, locator):

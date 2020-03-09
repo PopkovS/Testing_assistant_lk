@@ -12,7 +12,7 @@ def setup_for_module(browser):
     global page
     page = RegistrationPage(browser, Links.LOGIN_LINK)
     page.check_new_user_exist()
-    page.change_sys_paran(auth_ad="False", dir_control="False")
+    page.change_sys_paran(auth_ad="False")
     page.open()
     page.go_to_reg_page()
     yield page
@@ -123,7 +123,6 @@ class TestsNegativeAfterReg():
         browser.refresh()
         page.go_to_reg_page()
         yield page
-        # page.should_be_user()
         page.check_new_user_exist()
 
     def test_reg_link_from_letters(self):
@@ -132,17 +131,19 @@ class TestsNegativeAfterReg():
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_success_reg_page()
-        page.should_be_user_in_bd()
         page.go_to_login_page_from_confirm_reg()
         page.login(email=TestData.NEW_USER,
                    password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("acc_not_conf")
+        page.should_be_user_in_bd()
 
 
 class TestsRegPositive():
     @pytest.fixture(scope="function", autouse=True)
     def setup_for_login_neg_function(self, browser):
         browser.refresh()
+        global mail_num
+        mail_num = page.old_letters_count()
         page.go_to_reg_page()
         yield page
         page.should_be_user_in_bd()
@@ -154,8 +155,7 @@ class TestsRegPositive():
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_success_reg_page()
-        page.should_be_user_in_bd()
-        page.go_to_account_activation()
+        page.go_to_account_activation(old_lett=mail_num)
         page.should_be_reg_confirm_page()
         page.go_to_login_page_from_confirm_reg()
         page.login_new_user()
@@ -167,8 +167,7 @@ class TestsRegPositive():
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_success_reg_page()
-        page.should_be_user_in_bd()
-        page.go_to_account_activation()
+        page.go_to_account_activation(old_lett=mail_num)
         page.should_be_reg_confirm_page()
         page.close_tab()
         page.go_to_login_page_from_confirm_reg()

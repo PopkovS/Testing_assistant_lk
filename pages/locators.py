@@ -26,6 +26,7 @@ class Links():
     MY_DEVICE = MAIN_LINK + "/ClientDevice"
     MY_DEVICE_CREATE_GROUP = MY_DEVICE + "/CreateGroup?orgid=0"
     SET_PASSWORD_LINK = MAIN_LINK + "/Account/SetPassword"
+    RESEND_EMAIL_LINK = MAIN_LINK + "/Account/ReConfirmRegister"
     MAIL_FOR_SPAM_LINK = "https://www.mailforspam.co/mail/"
     MAIL_FOR_SPAM_NORM_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_NORMAL.lower().split("@")[0]
     MAIL_FOR_SPAM_AD_US = MAIL_FOR_SPAM_LINK + TestData.TEST_USER_EMAIL_AD.lower().split("@")[0]
@@ -41,7 +42,9 @@ class LoginLocators():
     ERR_MESS_CHANGE_PASS = (By.CSS_SELECTOR, "span[for=\"Password\"]")
     ERR_MESS_CHANGE_CONF_PASS = (By.CSS_SELECTOR, "span[for=\"ConfirmPassword\"]")
     ERR_ALERT = (By.CSS_SELECTOR, ".toast.toast-error")  # .toast-message"
-    GO_TO_SET_PASS_BUTT = (By.CSS_SELECTOR, ".other [href=\"/Account/SetPassword\"]")
+    GO_TO_SET_PASS_BUTT = (By.CSS_SELECTOR, '.other [href="/Account/SetPassword"]')
+    GO_TO_RESEND_EMAIL_BUTT = (By.CSS_SELECTOR, '[title="Повторная отправка инструкций"]')
+    RESEND_EMAIL_TITLE = (By.CSS_SELECTOR, '.account-login-cont>:nth-child(1) ')
     SET_PASS_TITLE = (By.CSS_SELECTOR, ".account-login-cont>.info-capt")
     CONF_CODE_FIELD = (By.CSS_SELECTOR, "[placeholder=\"Код подтверждения\"]")
 
