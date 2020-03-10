@@ -1,7 +1,8 @@
 from time import sleep
 
 import pytest
-
+import allure
+from allure_commons.types import AttachmentType
 from pages.locators import Links, TestData
 from pages.registration_page import RegistrationPage
 from pages.login_page import LoginPage, LoginLocators

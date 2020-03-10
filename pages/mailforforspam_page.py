@@ -52,4 +52,4 @@ def last_letter_id(link=Links.MAIL_FOR_SPAM_NORM_US):
         return max(id_list)
 
 
-print(last_letter_id())
+
