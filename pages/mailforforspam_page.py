@@ -20,8 +20,11 @@ class MailForSpamPage(BasePage):
             check_button.click()
             if old_lett < letter_id:
                 break
+            elif i <= 30:
+                self.close_tab()
+                assert i <= 30, f"Не удалось получить нужное письмо id предыдущего {old_lett}, " \
+                                f"id последнего {letter_id}"
             else:
-                assert i <= 60, f"Не удалось получить нужное письмо id предыдущего {old_lett}, id последнего {letter_id} "
                 i += 1
             continue
 

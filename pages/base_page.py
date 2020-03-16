@@ -4,6 +4,9 @@ import os
 import socket
 import sys
 import traceback
+
+from selenium.webdriver.common.by import By
+
 import pages.pg_data_base as pgdb
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,9 +29,8 @@ class BasePage():
     def is_element_present(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout).until(EC.visibility_of_element_located((how, what)))
-            # self.browser.find_element(how, what)
+            # WebDriverWait(self.browser, timeout).until(EC.element_to_be_clickable((how, what)))
         except TimeoutException:
-            # except NoSuchElementException:
             return False
         return True
 
@@ -46,7 +48,6 @@ class BasePage():
                 until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return False
-
         return True
 
     def go_to_page(self):
@@ -54,20 +55,36 @@ class BasePage():
         # if f"{self.url}" not in current_link:
         self.open()
 
-    def change_user_stat(self, stat=0, tfac="false", user=TestData.TEST_USER_NORMAL):
+    def change_user_stat(self, stat=0, tfac="false", email=TestData.USER_NORMAL_EMAIL):
         """0-активен, 1 - Заблокирован, 2 - Не подтверждён, 3 - В архиве"""
         stat = int(stat)
-        pgdb.change_stausid(stat, user)
-        pgdb.change_twofactor(tfac,user)
+        pgdb.change_stausid(stat, email)
+        pgdb.change_twofactor(tfac, email)
 
     def change_sys_paran(self, auth_ad="True", dir_control="False"):
         pgdb.change_auth_ad(auth_ad)
         pgdb.change_direct_control(dir_control)
 
+    def search_in_table(self, text='testassistantNewUser'):
+        search_field = self.browser.find_element(*BaseLocators.SEARCH_FIELD)
+        search_field.clear()
+        search_field.send_keys(text)
+        assert self.is_element_present(By.XPATH, f'//span[text()="{text}"]', timeout=6), \
+            f"Не удалось найти значение в таблцие по тексту:'{text}' "
+
+    def choose_row_in_table(self, text='testassistantNewUser'):
+        checkbox = self.browser.find_element(By.XPATH,
+                                             f'//span[text()="{text}"]/../../..//span[@class="fancytree-checkbox"]')
+        checkbox.click()
+
+    def search_and_choose(self, text):
+        self.search_in_table(text)
+        self.choose_row_in_table(text)
+
     def save_screen(self):
         name_scr = traceback.extract_stack(None, 2)[0][2]
         print(name_scr)
-        self.browser.save_screenshot(f".\\screenshots\\{name_scr}.png")
+        self.browser.save_screenshot(f".\\screenshots\\test{name_scr}.png")
 
     def new_tab(self, link=Links.MAIL_FOR_SPAM_NORM_US, i=1):
         self.browser.execute_script(f'window.open("{link}","_blank");')
@@ -78,7 +95,6 @@ class BasePage():
         self.browser.switch_to.window(new_window)
 
     def close_tab(self, i=1):
-        # new_window = self.browser.window_handles[i]
         self.browser.close()
         self.switch_to_tab(0)
 
@@ -89,15 +105,16 @@ class BasePage():
         text = config[section][var]
         return text
 
+    def text_test_name(self, var):
+        return self.get_text_from_config("TestName", var)
+
     def text_alert(self, var):
-        text = self.get_text_from_config("ErrAlert", var)
-        return text
+        return self.get_text_from_config("ErrAlert", var)
 
     def text_err_field(self, var):
-        text = self.get_text_from_config("ErrFieldMess", var)
-        return text
+        return self.get_text_from_config("ErrFieldMess", var)
 
-    def login(self, email=TestData.TEST_USER_NORMAL, password=TestData.PASSWORD_USER_NORMAL):
+    def login(self, email=TestData.USER_NORMAL_EMAIL, password=TestData.PASSWORD_USER_NORMAL):
         email_field = self.browser.find_element(*LoginLocators.EMAIL_FIELD)
         email_field.send_keys(email)
         password_field = self.browser.find_element(*LoginLocators.PASSWORD_USER_FIELD)
@@ -105,28 +122,38 @@ class BasePage():
         submit = self.browser.find_element(*BaseLocators.SUBMIT_BUTTON)
         submit.click()
 
-    def logout(self, name=TestData.TEST_USER_NAME):
+    def logout(self, name=TestData.USER_NORMAL_NAME):
         self.should_be_logged_in(name)
         avatar_user = self.browser.find_element(*BaseLocators.USER_MENU)
         avatar_user.click()
-        exit_but = self.browser.find_element(*BaseLocators.LOGOUT_BUT)
+        exit_but = self.browser.find_element(*BaseLocators.LOGOUT_BUTT)
         exit_but.click()
 
-    def should_be_logged_in(self, name=TestData.TEST_USER_NAME):
+    def check_new_user_exist(self, user=TestData.NEW_USER_EMAIL):
+        pgdb.del_new_user(user) if pgdb.check_user_exist(user) else None
+
+    def should_be_logged_in(self, name_user=TestData.USER_NORMAL_NAME):
         assert self.is_element_present(*BaseLocators.USER_MENU,
                                        timeout=10), "Не удалось найти ссылку c именем пользователя на " \
-                                                    "странице "
+                                                    "странице"
         text_user_name = self.browser.find_element(*BaseLocators.USER_MENU).text
-        assert text_user_name == name, f"Фактическое имя пользователя {text_user_name} не " \
-                                                          f"совпадает с ожидаемым {name} "
+        assert text_user_name == name_user, f"Фактическое имя пользователя авторизованного на сайте '{text_user_name}' " \
+                                       f"не совпадает с ожидаемым '{name_user}' "
 
-    def should_be_alert(self, var, expec=5, text=""):
-        alert = LoginLocators.ERR_ALERT
-        wait = WebDriverWait(self.browser, expec)
+    def should_be_alert(self, var, timeout=5, text=""):
+        alert = BaseLocators.ALERT
+        wait = WebDriverWait(self.browser, timeout)
         alert_text_expected = self.text_alert(var)
         alert_err_text = wait.until(EC.visibility_of_element_located((alert))).text
-        assert alert_text_expected.replace("@&&@", text) == alert_err_text, f"Полученное сообщение в алёрте \"{alert_err_text}\" не совподает с " \
-                                                      f"ожидаемым \"{alert_text_expected}\" "
+        assert alert_text_expected.replace("@&&@",
+                                           text) == alert_err_text, f"Полученное сообщение в алёрте \"{alert_err_text}\" не совподает с " \
+                                                                    f"ожидаемым \"{alert_text_expected}\" "
+
+    def close_alert(self):
+        alert = self.browser.find_element(*BaseLocators.ALERT)
+        alert.click()
+        self.is_disappeared(*BaseLocators.ALERT, timeout=8)
+
 
     def should_be_err_mess(self, var, locator):
         err_mess = locator
@@ -149,5 +176,5 @@ class BasePage():
                                           f'от ожидаемого "{text_expected}" '
 
     def should_be_no_more_necessary_alert(self, n=1):
-        number_of_alerts = len(self.browser.find_elements(*LoginLocators.ERR_ALERT))
+        number_of_alerts = len(self.browser.find_elements(*BaseLocators.ALERT))
         assert number_of_alerts == n, f"Количество алертов на экрване ({number_of_alerts}) не соответствует ожидаемому ({n})"

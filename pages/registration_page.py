@@ -1,17 +1,21 @@
+from time import sleep
+
 import pyperclip as pypc
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import pages.pg_data_base as pgdb
+
 from .base_page import BasePage
 from .locators import LoginLocators, Links, TestData, RegistrationLocators, BaseLocators
 from .mailforforspam_page import MailForSpamPage, last_letter_id
 
 
 class RegistrationPage(BasePage):
-    def go_to_reg_page(self):
+    def go_to_reg_page(self, reg_link=RegistrationLocators.GO_TO_REGISTRATION_PAGE):
         current_link = self.browser.current_url
         if Links.LOGIN_LINK in current_link:
-            self.browser.find_element(*RegistrationLocators.GO_TO_REGISTRATION_PAGE).click()
+            self.browser.refresh() if not self.is_element_present(*reg_link, timeout=2) else None
+            self.browser.find_element(*reg_link).click()
         else:
             self.browser.get(Links.REGISTRATION_LINK)
         self.should_be_title_page(text="registration", locator=RegistrationLocators.REGISTRATION_TITLE)
@@ -40,17 +44,14 @@ class RegistrationPage(BasePage):
         conf_password_field.send_keys(conf_password)
         self.submit_click()
 
-    def login_new_user(self, email=TestData.NEW_USER, password=TestData.PASSWORD_USER_NORMAL,
+    def login_new_user(self, email=TestData.NEW_USER_EMAIL, password=TestData.PASSWORD_USER_NORMAL,
                        name=TestData.NEW_USER_NAME):
         self.login(email=email, password=password)
-        self.should_be_logged_in(name=name)
+        self.should_be_logged_in(name_user=name)
         self.logout(name=name)
 
     def submit_click(self):
         self.browser.find_element(*BaseLocators.SUBMIT_BUTTON).click()
-
-    def check_new_user_exist(self, user=TestData.NEW_USER):
-        pgdb.del_new_user(user) if pgdb.check_user_exist(user) else None
 
     def should_be_err_reg_fields(self, email="", name="", pas="", conf_pass=""):
         self.should_be_err_mess(email, BaseLocators.ERR_EMAIL_FIELD) if email else None
@@ -58,19 +59,35 @@ class RegistrationPage(BasePage):
         self.should_be_err_mess(pas, BaseLocators.ERR_PAS_FIELD) if pas else None
         self.should_be_err_mess(conf_pass, BaseLocators.ERR_PAS_CONF_FIELD) if conf_pass else None
 
-    def should_not_be_user_in_bd(self, user=TestData.NEW_USER):
+    def should_not_be_user_in_bd(self, user=TestData.NEW_USER_EMAIL):
         assert not pgdb.check_user_exist(user), f"Пользователь {user} есть в базe данных, что то пошло не так"
 
-    def should_be_user_in_bd(self, user=TestData.NEW_USER):
+    def should_be_user_in_bd(self, user=TestData.NEW_USER_EMAIL):
         assert pgdb.check_user_exist(user), f"Пользователя {user} нет в базе данных, что то пошло не так"
 
-    def should_be_success_reg_page(self, email=TestData.NEW_USER):
+    def should_be_success_reg_page(self, email=TestData.NEW_USER_EMAIL):
         self.should_be_title_page(text="thanks_for_reg")
         self.is_element_present(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG)
         self.should_be_match_link(link=Links.REGISTRATION_SEND_MESS + "?email=" + email)
 
-    def should_be_reg_confirm_page(self, email=TestData.NEW_USER):
+    def should_be_reg_confirm_page(self, email=TestData.NEW_USER_EMAIL):
         self.should_be_title_page(text="reg_confirm", locator=RegistrationLocators.REG_CONFIRM_TITLE)
         self.should_be_title_page(text="reg_confirm_text", locator=RegistrationLocators.REG_CONFIRM_TEXT)
         self.is_element_present(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG)
         self.should_be_match_link(link="?email=" + email)
+
+    def full_registration(self, link=Links.MAIL_FOR_SPAM_NEW_US, email=TestData.NEW_USER_EMAIL, name=TestData.NEW_USER_NAME,
+                          password=TestData.PASSWORD_USER_NORMAL):
+        self.change_sys_paran(auth_ad="True", dir_control="False")
+
+        mail_num = self.old_letters_count(link=link)
+        self.go_to_reg_page()
+        self.registration(email=email,
+                          name=name,
+                          password=password,
+                          conf_password=password)
+        self.go_to_account_activation(old_lett=mail_num, link=link)
+        self.close_tab()
+        self.is_element_present(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG)
+        self.browser.find_element(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG).click()
+        self.change_sys_paran(auth_ad="True", dir_control="True")

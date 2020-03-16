@@ -15,6 +15,7 @@ class LoginPage(BasePage):
         self.click_submit()
 
     def send_confirm_code(self):
+        self.is_element_present(*LoginLocators.CONF_CODE_FIELD, timeout=8)
         conf_pass_field = self.browser.find_element(*LoginLocators.CONF_CODE_FIELD)
         cod = pypc.paste()
         conf_pass_field.send_keys(cod)
@@ -32,8 +33,6 @@ class LoginPage(BasePage):
         password_field.send_keys(password)
         password_field = self.browser.find_element(*BaseLocators.PASSWORD_CONFIRM_FIELD)
         password_field.send_keys(password_conf)
-
-    # def
 
     def go_to_login_from_set_password(self):
         self.browser.find_element(*RegistrationLocators.GO_TO_LOGIN_PAGE_FROM_REG).click()
@@ -58,7 +57,7 @@ class LoginPage(BasePage):
         else:
             self.browser.refresh()
 
-    def go_to_set_password_conf_page(self, user=TestData.TEST_USER_NORMAL):
+    def go_to_set_password_conf_page(self, user=TestData.USER_NORMAL_EMAIL):
         old_lett = last_letter_id()
         current_link = self.browser.current_url
         if f"{Links.SET_PASSWORD_LINK}Confirm?email={user}" not in current_link:
@@ -98,6 +97,14 @@ class LoginPage(BasePage):
     def fill_email(self, email):
         email_field = self.browser.find_element(*LoginLocators.EMAIL_FIELD)
         email_field.send_keys(email)
+
+    def login_twofac(self, email=TestData.USER_AD_EMAIL, name=TestData.USER_AD_NAME, password=TestData.PASSWORD_USER_AD,
+                     link=Links.MAIL_FOR_SPAM_AD_US):
+        self.change_user_stat(0, tfac="true", email=email)
+        self.login(name, password)
+        self.get_conf_code(link=link)
+        self.send_confirm_code()
+        self.change_user_stat(0, tfac="false", email=email)
 
     def should_be_resending_email_page(self):
         self.should_be_title_page(text="resending emails", locator=LoginLocators.RESEND_EMAIL_TITLE)

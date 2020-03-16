@@ -43,7 +43,7 @@ class TestsRegNegative():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_reg_with_empty_name(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name="",
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -51,7 +51,7 @@ class TestsRegNegative():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_reg_with_empty_pass_and_conf_pass(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password="",
                           conf_password="")
@@ -60,7 +60,7 @@ class TestsRegNegative():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_reg_with_empty_pass(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password="",
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -69,7 +69,7 @@ class TestsRegNegative():
         page.should_be_alert("err_to_admin")
 
     def test_reg_with_empty_conf_pass(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password="",
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -78,7 +78,7 @@ class TestsRegNegative():
         page.should_be_alert("err_to_admin")
 
     def test_reg_with_diff_passwords(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_AD)
@@ -87,7 +87,7 @@ class TestsRegNegative():
         page.should_be_alert("err_to_admin")
 
     def test_reg_with_not_format_email(self, browser):
-        page.registration(email=TestData.NEW_USER.replace("@", ""),
+        page.registration(email=TestData.NEW_USER_EMAIL.replace("@", ""),
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -95,14 +95,14 @@ class TestsRegNegative():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_reg_with_taken_email(self, browser):
-        page.registration(email=TestData.TEST_USER_NORMAL,
+        page.registration(email=TestData.USER_NORMAL_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
-        page.should_be_alert("email_is_taken", text=TestData.TEST_USER_NORMAL)
+        page.should_be_alert("email_is_taken", text=TestData.USER_NORMAL_EMAIL)
 
     def test_reg_with_dangerous_content_in_email(self, browser):
-        page.registration(email=f"<{TestData.NEW_USER}>",
+        page.registration(email=f"<{TestData.NEW_USER_EMAIL}>",
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -110,7 +110,7 @@ class TestsRegNegative():
         page.should_be_alert("dang_cont")
 
     def test_reg_with_dangerous_content_in_name(self, browser):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=f"<{TestData.NEW_USER_NAME}>",
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -126,13 +126,13 @@ class TestsNegativeAfterReg():
         page.check_new_user_exist()
 
     def test_reg_link_from_letters(self):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_success_reg_page()
         page.go_to_login_page_from_confirm_reg()
-        page.login(email=TestData.NEW_USER,
+        page.login(email=TestData.NEW_USER_EMAIL,
                    password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("acc_not_conf")
         page.should_be_user_in_bd()
@@ -150,7 +150,7 @@ class TestsRegPositive():
         page.check_new_user_exist()
 
     def test_reg_link_from_letters(self):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -162,7 +162,7 @@ class TestsRegPositive():
         page.close_tab()
 
     def test_reg_link_from_reg_page(self):
-        page.registration(email=TestData.NEW_USER,
+        page.registration(email=TestData.NEW_USER_EMAIL,
                           name=TestData.NEW_USER_NAME,
                           password=TestData.PASSWORD_USER_NORMAL,
                           conf_password=TestData.PASSWORD_USER_NORMAL)
@@ -172,3 +172,26 @@ class TestsRegPositive():
         page.close_tab()
         page.go_to_login_page_from_confirm_reg()
         page.login_new_user()
+
+# class TestsDeleteMe():
+#     def test_registr2(self):
+#         page.change_sys_paran(auth_ad="True", dir_control="False")
+#         mail_num = page.old_letters_count(link=Links.MAIL_FOR_SPAM_NEW_US + "2")
+#         page.registration(email=TestData.NEW_USER.replace("ser@", "ser2@"),
+#                           name=TestData.NEW_USER_NAME + "2",
+#                           password=TestData.PASSWORD_USER_NORMAL,
+#                           conf_password=TestData.PASSWORD_USER_NORMAL)
+#         page.go_to_account_activation(old_lett=mail_num, link=Links.MAIL_FOR_SPAM_NEW_US + "2")
+#         page.change_sys_paran(auth_ad="True", dir_control="True")
+#
+#     def test_registr1(self):
+#         page.change_sys_paran(auth_ad="True", dir_control="False")
+#         mail_num = page.old_letters_count(link=Links.MAIL_FOR_SPAM_NEW_US)
+#         page.registration(email=TestData.NEW_USER,
+#                           name=TestData.NEW_USER_NAME,
+#                           password=TestData.PASSWORD_USER_NORMAL,
+#                           conf_password=TestData.PASSWORD_USER_NORMAL)
+#         page.go_to_account_activation(old_lett=mail_num, link=Links.MAIL_FOR_SPAM_NEW_US)
+#         page.change_sys_paran(auth_ad="True", dir_control="True")
+
+    # sleep(6)

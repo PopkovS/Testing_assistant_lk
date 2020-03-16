@@ -4,7 +4,7 @@ import socket
 from pages.locators import TestData
 
 
-def request_sending_edit_user(my_filename='edit_user', id_user='144', email=TestData.TEST_USER_AD, status_id="0",
+def request_sending_edit_user(my_filename='edit_user', id_user='144', email=TestData.USER_AD_NAME, status_id="0",
                               two_factor="False"):
     with open(fr'../packages/{my_filename}.txt', 'rb+') as fp:
         pack_read = fp.read()

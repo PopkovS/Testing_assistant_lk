@@ -39,39 +39,39 @@ class TestsLoginNegative():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_login_with_empty_password_field(self, browser):
-        page.login(TestData.TEST_USER_NORMAL, '')
+        page.login(TestData.USER_NORMAL_EMAIL, '')
         page.should_be_err_mess_password("pass_empty")
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_login_with_not_format_email(self, browser):
-        page.login(TestData.TEST_USER_NORMAL.replace("@", ""), TestData.FAKE_PASSWORD)
+        page.login(TestData.USER_NORMAL_EMAIL.replace("@", ""), TestData.FAKE_PASSWORD)
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_login_with_dangerous_content_in_email(self, browser):
-        page.login(f"<{TestData.TEST_USER_NORMAL}>", TestData.PASSWORD_USER_NORMAL)
+        page.login(f"<{TestData.USER_NORMAL_EMAIL}>", TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("dang_cont")
 
     def test_login_with_incorrect_email(self, browser):
-        page.login(f"1111{TestData.TEST_USER_NORMAL}", TestData.PASSWORD_USER_NORMAL)
+        page.login(f"1111{TestData.USER_NORMAL_EMAIL}", TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("err_pass_or_log")
 
     def test_login_with_incorrect_password(self, browser):
-        page.login(TestData.TEST_USER_NORMAL, f"11{TestData.PASSWORD_USER_NORMAL}")
+        page.login(TestData.USER_NORMAL_EMAIL, f"11{TestData.PASSWORD_USER_NORMAL}")
         page.should_be_alert("err_pass_or_log")
 
     def test_login_with_blocked_user(self, browser):
         page.change_user_stat(1)
-        page.login(TestData.TEST_USER_NORMAL, TestData.PASSWORD_USER_NORMAL)
+        page.login(TestData.USER_NORMAL_EMAIL, TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("acc_blocked")
 
     def test_login_with_not_confirmed_user(self, browser):
         page.change_user_stat(2)
-        page.login(TestData.TEST_USER_NORMAL, TestData.PASSWORD_USER_NORMAL)
+        page.login(TestData.USER_NORMAL_EMAIL, TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("acc_not_conf")
 
     def test_login_with_archive_user(self, browser):
         page.change_user_stat(3)
-        page.login(TestData.TEST_USER_NORMAL, TestData.PASSWORD_USER_NORMAL)
+        page.login(TestData.USER_NORMAL_EMAIL, TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("acc_archive")
 
     def test_login_with_empty_fields_with_ad(self, browser):
@@ -83,8 +83,8 @@ class TestsLoginNegative():
 
     def test_login_with_incorrect_email_with_ad(self, browser):
         page.change_sys_paran(auth_ad="True")
-        page.login(f"1111{TestData.TEST_USER_EMAIL_AD}", TestData.PASSWORD_USER_AD)
-        page.should_be_alert("err_ad", expec=15)
+        page.login(f"1111{TestData.USER_AD_EMAIL}", TestData.PASSWORD_USER_AD)
+        page.should_be_alert("err_ad", timeout=15)
         page.change_sys_paran(auth_ad="False")
 
 
@@ -108,35 +108,35 @@ class TestsSetPasswordNegativeForEmail():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_setpassword_not_format_email(self, browser):
-        page.set_email(TestData.TEST_USER_NORMAL.replace("@", ""))
+        page.set_email(TestData.USER_NORMAL_EMAIL.replace("@", ""))
         page.click_submit()
         page.should_be_err_mess_email("not_valid_email")
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_setpassword_with_dangerous_content_in_email(self, browser):
-        page.set_email(f"<{TestData.TEST_USER_NORMAL}>")
+        page.set_email(f"<{TestData.USER_NORMAL_EMAIL}>")
         page.click_submit()
         page.should_be_err_mess_email("not_valid_email")
         page.should_be_alert("dang_cont")
 
     def test_setpassword_with_incorrect_email(self, browser):
-        page.set_email(f"1111{TestData.TEST_USER_NORMAL}")
+        page.set_email(f"1111{TestData.USER_NORMAL_EMAIL}")
         page.should_be_alert("acc_not_found")
 
     def test_setpassword_with_blocked_user(self, browser):
         page.change_user_stat(1)
-        page.set_email(TestData.TEST_USER_NORMAL)
-        page.should_be_alert("acc_not_active")
+        page.set_email(TestData.USER_NORMAL_EMAIL)
+        page.should_be_alert("acc_not_active", timeout=10)
 
     def test_setpassword_not_confirmed_user(self, browser):
         page = LoginPage(browser, Links.LOGIN_LINK)
         page.change_user_stat(2)
-        page.set_email(TestData.TEST_USER_NORMAL)
-        page.should_be_alert("acc_not_active")
+        page.set_email(TestData.USER_NORMAL_EMAIL)
+        page.should_be_alert("acc_not_active", timeout=10)
 
     def test_setpassword_with_archive_user(self, browser):
         page.change_user_stat(3)
-        page.set_email(TestData.TEST_USER_NORMAL)
+        page.set_email(TestData.USER_NORMAL_EMAIL)
         page.should_be_alert("acc_not_active")
 
 
@@ -161,34 +161,34 @@ class TestsResendingEmailFormsNegativ():
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_setpassword_not_format_email(self, browser):
-        page.set_email(TestData.TEST_USER_NORMAL.replace("@", ""))
+        page.set_email(TestData.USER_NORMAL_EMAIL.replace("@", ""))
         page.click_submit()
         page.should_be_err_mess_email("not_valid_email")
         page.should_be_alert("not_valid_pass_or_log")
 
     def test_setpassword_with_dangerous_content_in_email(self, browser):
-        page.set_email(f"<{TestData.TEST_USER_NORMAL}>")
+        page.set_email(f"<{TestData.USER_NORMAL_EMAIL}>")
         page.click_submit()
         page.should_be_err_mess_email("not_valid_email")
         page.should_be_alert("dang_cont")
 
     def test_setpassword_with_incorrect_email(self, browser):
-        page.set_email(f"1111{TestData.TEST_USER_NORMAL}")
+        page.set_email(f"1111{TestData.USER_NORMAL_EMAIL}")
         page.should_be_alert("acc_not_found_for_resend")
 
     def test_setpassword_active_user(self, browser):
         page.change_user_stat(0)
-        page.set_email(TestData.TEST_USER_NORMAL)
+        page.set_email(TestData.USER_NORMAL_EMAIL)
         page.should_be_alert("acc_active")
 
     def test_setpassword_with_blocked_user(self, browser):
         page.change_user_stat(1)
-        page.set_email(TestData.TEST_USER_NORMAL)
+        page.set_email(TestData.USER_NORMAL_EMAIL)
         page.should_be_alert("acc_blocked_for_resend")
 
     def test_setpassword_with_archive_user(self, browser):
         page.change_user_stat(3)
-        page.set_email(TestData.TEST_USER_NORMAL)
+        page.set_email(TestData.USER_NORMAL_EMAIL)
         page.should_be_alert("acc_not_active_for_resend")
 
 
@@ -253,7 +253,7 @@ class TestsAccessRecoveryPositive():
         page.set_password_confirm(TestData.PASSWORD_USER_AD, TestData.PASSWORD_USER_AD)
         page.should_be_logged_in()
         page.logout()
-        page.login(email=TestData.TEST_USER_NORMAL, password=TestData.PASSWORD_USER_AD)
+        page.login(email=TestData.USER_NORMAL_EMAIL, password=TestData.PASSWORD_USER_AD)
         page.should_be_logged_in()
         page.logout()
         page.close_tab()
@@ -262,7 +262,7 @@ class TestsAccessRecoveryPositive():
         page.set_password_confirm(TestData.PASSWORD_USER_AD, TestData.PASSWORD_USER_AD)
         page.should_be_logged_in()
         page.logout()
-        page.login(email=TestData.TEST_USER_NORMAL, password=TestData.PASSWORD_USER_NORMAL)
+        page.login(email=TestData.USER_NORMAL_EMAIL, password=TestData.PASSWORD_USER_NORMAL)
         page.should_be_alert("err_pass_or_log")
         page.close_tab()
 
@@ -277,7 +277,7 @@ class TestsResendingEmailPositive():
         page.change_user_stat(0)
         page.go_to_page()
 
-    def test_resending_email(self, browser, email=TestData.TEST_USER_NORMAL):
+    def test_resending_email(self, browser, email=TestData.USER_NORMAL_EMAIL):
         reg_page = RegistrationPage(browser, Links.REGISTRATION_LINK)
         mail_num = reg_page.old_letters_count()
 
@@ -286,7 +286,7 @@ class TestsResendingEmailPositive():
         reg_page.go_to_account_activation(old_lett=mail_num, link=Links.MAIL_FOR_SPAM_NORM_US)
         reg_page.should_be_reg_confirm_page(email=email)
         reg_page.go_to_login_page_from_confirm_reg()
-        reg_page.login_new_user(email=email, password=TestData.PASSWORD_USER_NORMAL, name=TestData.TEST_USER_NAME)
+        reg_page.login_new_user(email=email, password=TestData.PASSWORD_USER_NORMAL, name=TestData.USER_NORMAL_NAME)
         reg_page.close_tab()
 
 
@@ -304,12 +304,12 @@ class TestsLoginPositive():
         browser.refresh()
 
     def test_login(self, browser):
-        page.login(TestData.TEST_USER_NORMAL, TestData.PASSWORD_USER_NORMAL)
+        page.login(TestData.USER_NORMAL_EMAIL, TestData.PASSWORD_USER_NORMAL)
         page.should_be_logged_in()
 
     def test_login_with_twofactor(self, browser):
         page.change_user_stat(0, tfac="true")
-        page.login(TestData.TEST_USER_NORMAL, TestData.PASSWORD_USER_NORMAL)
+        page.login(TestData.USER_NORMAL_EMAIL, TestData.PASSWORD_USER_NORMAL)
         page.get_conf_code()
         page.send_confirm_code()
         page.should_be_logged_in()
@@ -319,7 +319,7 @@ class TestsLoginPositive():
 class TestsLoginPositiveWithAD():
     @pytest.fixture(scope="class", autouse=True)
     def setup_for_set_pass_confirm_neg_class(self, browser):
-        page.change_user_stat(0, user=TestData.TEST_USER_EMAIL_AD, tfac="false")
+        page.change_user_stat(0, email=TestData.USER_AD_EMAIL, tfac="false")
         page.change_sys_paran()
         yield page
         page.change_sys_paran(auth_ad="False")
@@ -328,16 +328,16 @@ class TestsLoginPositiveWithAD():
     def setup_for_set_pass_neg_function(self, browser):
         page.go_to_page()
         yield page
-        page.logout(name=TestData.TEST_USER_AD)
+        page.logout(name=TestData.USER_AD_NAME)
         browser.refresh()
 
     def test_login_with_ad(self, browser):
-        page.change_user_stat(0, user=TestData.TEST_USER_EMAIL_AD)
-        page.login(TestData.TEST_USER_AD, TestData.PASSWORD_USER_AD)
+        page.change_user_stat(0, email=TestData.USER_AD_EMAIL)
+        page.login(TestData.USER_AD_NAME, TestData.PASSWORD_USER_AD)
 
     def test_login_with_twofactor_with_ad(self, browser):
-        page.change_user_stat(0, tfac="true", user=TestData.TEST_USER_EMAIL_AD)
-        page.login(TestData.TEST_USER_AD, TestData.PASSWORD_USER_AD)
+        page.change_user_stat(0, tfac="true", email=TestData.USER_AD_EMAIL)
+        page.login(TestData.USER_AD_NAME, TestData.PASSWORD_USER_AD)
         page.get_conf_code(link=Links.MAIL_FOR_SPAM_AD_US)
         page.send_confirm_code()
-        page.change_user_stat(0, tfac="false", user=TestData.TEST_USER_EMAIL_AD)
+        page.change_user_stat(0, tfac="false", email=TestData.USER_AD_EMAIL)
